@@ -20,15 +20,15 @@ static auto  getMechanicNamesForComboBox = [](void* current_mechanics,int curren
 
 void MechanicFilter::drawPopup()
 {
-	filter_player.Draw("Player");
+	filter_player.Draw("玩家");
 	ImGui::Separator();
 	filter_boss.Draw("Boss");
 	ImGui::Separator();
-	filter_mechanic.Draw("Mechanic");
+	filter_mechanic.Draw("機制");
 
-	ImGui::Checkbox("Only show players currently in squad", &show_in_squad_only);
-	ImGui::Checkbox("Show all mechanics", &show_all_mechanics);
-	ImGui::SameLine(); showHelpMarker("Display all mechanics regardless of default options. Can be spammy.");
+	ImGui::Checkbox("僅顯示目前團隊中的玩家", &show_in_squad_only);
+	ImGui::Checkbox("顯示所有機制", &show_all_mechanics);
+	ImGui::SameLine(); showHelpMarker("無論預設選項為何，顯示所有機制。");
 }
 
 bool MechanicFilter::isActive()

@@ -321,7 +321,7 @@ uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t i
 
 void ShowMechanicsLog(bool* p_open)
 {
-	if(show_app_log) log_ui.draw("Mechanics Log", p_open, ImGuiWindowFlags_NoCollapse
+	if(show_app_log) log_ui.draw("機制日誌", p_open, ImGuiWindowFlags_NoCollapse
 		| (!canMoveWindows() ? ImGuiWindowFlags_NoMove : 0), &tracker);
 }
 
@@ -329,7 +329,7 @@ void ShowMechanicsChart(bool* p_open)
 {
 	if (show_app_chart)
 	{
-		chart_ui.draw(&tracker, "Mechanics Chart", p_open, ImGuiWindowFlags_NoCollapse
+		chart_ui.draw(&tracker, "機制圖表", p_open, ImGuiWindowFlags_NoCollapse
 			| (!canMoveWindows() ? ImGuiWindowFlags_NoMove : 0), arc_clicklock_altui);
 	}
 }
@@ -372,8 +372,8 @@ uintptr_t mod_options_windows(const char* windowname)
 {
 	if (!windowname)
 	{
-		ImGui::Checkbox("Mechanics Log", &show_app_log);
-		ImGui::Checkbox("Mechanics Chart", &show_app_chart);
+		ImGui::Checkbox("機制日誌", &show_app_log);
+		ImGui::Checkbox("機制圖表", &show_app_chart);
 	}
 
 	return 0;

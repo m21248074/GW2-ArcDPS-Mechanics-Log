@@ -10,20 +10,20 @@ void AppLog::draw(const char* title, bool* p_open, ImGuiWindowFlags flags, Track
     ImGui::SetNextWindowSize(ImVec2(500,400), ImGuiCond_FirstUseEver);
 	ImGui::Begin(title, p_open, flags);
 	ImGui::BeginChild("Buttons",ImVec2(0, ImGui::GetFrameHeightWithSpacing()));
-	if (ImGui::Button("Clear")) tracker->clearLog();;
+	if (ImGui::Button("清除")) tracker->clearLog();;
     ImGui::SameLine();
-    const bool copy = ImGui::Button("Copy");
+    const bool copy = ImGui::Button("複製");
     ImGui::SameLine();
 
-	std::string filter_button_text = "Filter - " 
-		+ (filter.isActive() ? std::string("Active") : std::string("Inactive"));
+	std::string filter_button_text = "篩選器 - " 
+		+ (filter.isActive() ? std::string("啟用") : std::string("未啟用"));
 
 	if (ImGui::Button(filter_button_text.c_str(),ImVec2(-1,0))) ImGui::OpenPopup("FilterOptions");
 	if (ImGui::BeginPopup("FilterOptions"))
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
 		filter.drawPopup();
-		ImGui::Checkbox("Show separators between pulls", &show_pull_separators);
+		ImGui::Checkbox("在每場戰鬥間顯示分隔線", &show_pull_separators);
 		ImGui::PopStyleVar();
 		ImGui::EndPopup();
 	}
@@ -89,15 +89,15 @@ void AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWind
 
 	Player* current_player = nullptr;
 
-    if (ImGui::Button("Clear")) clear(tracker);
+    if (ImGui::Button("清除")) clear(tracker);
     ImGui::SameLine();
-    if (ImGui::Button("Export")) exportData(tracker);
+    if (ImGui::Button("導出")) exportData(tracker);
     ImGui::SameLine();
-    if (ImGui::Button("Copy")) ImGui::LogToClipboard();
+    if (ImGui::Button("複製")) ImGui::LogToClipboard();
 	ImGui::SameLine();
 
-	std::string filter_button_text = "Filter - "
-		+ (filter.isActive() ? std::string("Active") : std::string("Inactive"));
+	std::string filter_button_text = "篩選器 - "
+		+ (filter.isActive() ? std::string("啟用") : std::string("未啟用"));
 
 	if (ImGui::Button(filter_button_text.c_str(), ImVec2(-1, 0))) ImGui::OpenPopup("FilterOptions");
 	if (ImGui::BeginPopup("FilterOptions"))
@@ -112,17 +112,17 @@ void AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWind
     ImGui::Separator();
 
     ImGui::BeginGroup();
-    ImGui::Text("Name");
+    ImGui::Text("名字");
     ImGui::SameLine(getChartColumnLoc(window_width,1));
-    ImGui::Text("Neutral");
+    ImGui::Text("成功");
     ImGui::SameLine(getChartColumnLoc(window_width,2));
-    ImGui::Text("Failed");
+    ImGui::Text("失敗");
     ImGui::SameLine(getChartColumnLoc(window_width,3));
-    ImGui::Text("Downs");
+    ImGui::Text("倒地");
     ImGui::SameLine(getChartColumnLoc(window_width,4));
-    ImGui::Text("Deaths");
+    ImGui::Text("死亡");
     ImGui::SameLine(getChartColumnLoc(window_width,5));
-    ImGui::Text("Pulls");
+    ImGui::Text("戰鬥次數");
     ImGui::EndGroup();
 
     ImGui::BeginChild("scrolling");
@@ -171,7 +171,7 @@ void AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWind
         }
 
 		ImGui::Indent();
-		ImGui::Text("Total (with current filters)");
+		ImGui::Text("總計 (使用當前過濾器)");
 
 		ImGui::SameLine(getChartColumnLoc(window_width, 1));
 		ImGui::Text("%d", current_mechanic_neutral_count);
@@ -278,15 +278,15 @@ void AppOptions::draw(Tracker* tracker)
 {
 	if (ImGui::BeginChild("Mechanics Settings", ImVec2(550, 650)))
 	{
-		ImGui::Checkbox("Only show mechanics for self", &tracker->show_only_self);
+		ImGui::Checkbox("只顯示自己的機制", &tracker->show_only_self);
 
-		ImGui::InputInt("Max mechanics in log", &tracker->max_log_events, 25);
+		ImGui::InputInt("日誌中最大的機制數", &tracker->max_log_events, 25);
 
-		ImGui::Checkbox("Export chart to CSV when game is closed", &tracker->export_chart_on_close);
+		ImGui::Checkbox("遊戲關閉時將圖表匯出為CSV", &tracker->export_chart_on_close);
 
 		ImGui::Separator();
 
-		ImGui::Text("Where to show each mechanic");
+		ImGui::Text("在哪裡顯示每個機制");
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth() / 3.0f);
 
@@ -300,10 +300,10 @@ void AppOptions::draw(Tracker* tracker)
 					if (current_mechanic->boss->name == boss->name)
 					{
 						ImGui::Combo(current_mechanic->name.c_str(), &current_mechanic->verbosity,
-							"Hidden\0"
-							"Chart Only\0"
-							"Log only\0"
-							"Everywhere\0\0", 4);
+							"隱藏\0"
+							"僅圖表\0"
+							"僅日誌\0"
+							"圖表及日誌\0\0", 4);
 
 						if (current_mechanic->description.length() > 0)
 						{
